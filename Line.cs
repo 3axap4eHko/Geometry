@@ -9,7 +9,7 @@ namespace Geometry
         OnLine
     }
 
-    public class Line
+    public class Line : Shape
     {
 
         public double A, B, C, Tan, delta;
@@ -88,7 +88,12 @@ namespace Geometry
             return this.PointRelation(point.X, point.Y);
         }
 
-        public Point IntersectLine(Line line)
+        public override bool IsBelongsTo(double X, double Y)
+        {
+            return Calculating.DoubleEquals(this.GetY(X), Y);
+        }
+
+        public override Point[] IntersectLinePoints(Line line)
         {
             double dividend = (C * line.B - line.C * B);
             double devisor = (B * line.A - line.B * A);
@@ -100,7 +105,7 @@ namespace Geometry
             {
                 double X = dividend/devisor;
                 double Y = this.GetY(X);
-                return new Point(X, Y);
+                return new Point[]{new Point(X, Y)};
             }
             
         }

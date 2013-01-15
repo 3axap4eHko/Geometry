@@ -4,43 +4,41 @@ using System.Collections.Generic;
 namespace Geometry
 {
 
-    class Rectangle
+    class Rectangle: Shape
     {
-        public Band Band1, Band2;
+        public Band[] Bands = new Band[2];
 
         public Rectangle(Line L1, Line L2, Line L3, Line L4)
         {
-            this.Band1 = new Band(L1, L3);
-            this.Band2 = new Band(L2, L4);
+            this.Bands[0] = new Band(L1, L3);
+            this.Bands[1] = new Band(L2, L4);
         }
 
         public Rectangle(Point P1, Point P2, Point P3, Point P4)
         {
-            this.Band1 = new Band(new Line(P1, P2), new Line(P3, P4));
-            this.Band2 = new Band(new Line(P2, P3), new Line(P4, P1));
+            this.Bands[0] = new Band(new Line(P1, P2), new Line(P3, P4));
+            this.Bands[0] = new Band(new Line(P2, P3), new Line(P4, P1));
         }
 
 
-        public bool IsInRectangle(Point point)
+        public override bool IsBelongsTo(double X, double Y)
         {
-            return this.Band1.IsInBand(point) && this.Band2.IsInBand(point);
+            return this.Bands[0].IsBelongsTo(X, Y) && this.Bands[0].IsBelongsTo(X, Y);
         }
 
-        public Point[] IntersectLinePoints(Line line)
+        public override Point[] IntersectLinePoints(Line intersectline)
         {
             List<Point> result = new List<Point>();
-            Point[] intersects = {
-                                 this.Band1.Line1.IntersectLine(line),
-                                 this.Band1.Line2.IntersectLine(line),
-                                 this.Band2.Line1.IntersectLine(line),
-                                 this.Band2.Line2.IntersectLine(line)
-                                 };
-            foreach (Point point in intersects)
+            foreach (Band band in this.Bands)
             {
-                if ( (point != null) && this.IsInRectangle(point))
+                foreach (Point point in band.IntersectLinePoints(intersectline))
                 {
-                    result.Add(point);
+                    if ((point != null) && this.IsBelongsTo(point))
+                    {
+                        result.Add(point);
+                    }
                 }
+
             }
             return result.ToArray();
         }

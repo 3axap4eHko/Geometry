@@ -28,5 +28,10 @@ namespace Geometry
             }
             return resolves.ToArray();
         }
+
+        public static double LinearEquation(double a, double b)
+        {
+            return -b / a;
+        }
     }
 }
