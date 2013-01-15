@@ -66,10 +66,5 @@ namespace Test
             Assert.AreEqual(line3.IntersectLinePoints(line2).Length, 1);
             Assert.IsTrue(line1.IntersectLinePoints(line2)[0] == new Point(0, 0));
         }
-
-
-
-
-
     }
 }
