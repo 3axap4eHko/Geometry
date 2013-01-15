@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Geometry
 {
@@ -25,8 +26,9 @@ namespace Geometry
             return this.Band1.IsInBand(point) && this.Band2.IsInBand(point);
         }
 
-        public bool IntersectLine(Line line)
+        public Point[] IntersectLinePoints(Line line)
         {
+            List<Point> result = new List<Point>();
             Point[] intersects = {
                                  this.Band1.Line1.IntersectLine(line),
                                  this.Band1.Line2.IntersectLine(line),
@@ -37,10 +39,18 @@ namespace Geometry
             {
                 if ( (point != null) && this.IsInRectangle(point))
                 {
-                    return true;
+                    result.Add(point);
                 }
             }
-            return false;
+            return result.ToArray();
         }
+
+        public bool IsIntersectLine(Line line)
+        {
+            return this.IntersectLinePoints(line).Length > 0;
+        }
+
+
+
     }
 }
