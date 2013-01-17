@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Test
+namespace Geometry.Test
 {
     [TestClass]
     public class RectangleTest

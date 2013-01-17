@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Geometry;
 
-namespace Test
+namespace Geometry.Test
 {
     [TestClass]
     public class PointTest
