@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Geometry
 {
 
-    class Rectangle: Shape
+    class Rectangle : Shape
     {
         public Band[] Bands = new Band[2];
 
@@ -17,13 +17,24 @@ namespace Geometry
         public Rectangle(Point P1, Point P2, Point P3, Point P4)
         {
             this.Bands[0] = new Band(new Line(P1, P2), new Line(P3, P4));
-            this.Bands[0] = new Band(new Line(P2, P3), new Line(P4, P1));
+            this.Bands[1] = new Band(new Line(P2, P3), new Line(P4, P1));
         }
 
+        public Rectangle(Point center, double angle, double width, double height)
+        {
+            double DX = Math.Abs(width / 2 * Math.Cos(Math.PI / 2 - angle));
+            double DY = Math.Abs(height / 2 * Math.Sin(Math.PI / 2 - angle));
+            Point P1 = new Point(DX, DY);
+            Point P2 = new Point(DY, DY);
+            Point P3 = new Point(-DX, -DY);
+            Point P4 = new Point(-DY, -DX);
+            this.Bands[0] = new Band(new Line(P1, P2), new Line(P3, P4));
+            this.Bands[1] = new Band(new Line(P2, P3), new Line(P4, P1));
+        }
 
         public override bool IsBelongsTo(double X, double Y)
         {
-            return this.Bands[0].IsBelongsTo(X, Y) && this.Bands[0].IsBelongsTo(X, Y);
+            return this.Bands[0].IsBelongsTo(X, Y) && this.Bands[1].IsBelongsTo(X, Y);
         }
 
         public override Point[] IntersectLinePoints(Line intersectline)
@@ -38,7 +49,6 @@ namespace Geometry
                         result.Add(point);
                     }
                 }
-
             }
             return result.ToArray();
         }
@@ -47,8 +57,5 @@ namespace Geometry
         {
             return this.IntersectLinePoints(line).Length > 0;
         }
-
-
-
     }
 }
